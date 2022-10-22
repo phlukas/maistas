@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Maistas.Migrations
 {
     [DbContext(typeof(FoodDbContext))]
-    partial class MaistasContextModelSnapshot : ModelSnapshot
+    [Migration("20221022120139_AddedDishIngredientsAndCategories")]
+    partial class AddedDishIngredientsAndCategories
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +84,7 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.DishIngredient", b =>
@@ -105,7 +107,7 @@ namespace Maistas.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("DishIngredients");
+                    b.ToTable("DishIngredient");
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.Ingredient", b =>
@@ -123,7 +125,7 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredient");
                 });
 
             modelBuilder.Entity("Dish", b =>

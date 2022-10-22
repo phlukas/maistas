@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Dish>
+@{
+	ViewData["title"] = "Patiekalai";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+	<span class="title">@ViewData["title"]</span>
+	<span class="actions">
+		<a href="@Url.Action("Create")" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sukurti naują</a>
+	</span>
+</div>
+
+<div class="d-flex justify-content-center">
+	<table class="entitylist table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.Name)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Price)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Calories)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.CreatedAt)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Description)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Remainder)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Vegan)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.WeightInGrams)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Category)
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model) {
+			<tr>
+				<td>
+					@Html.DisplayFor(model => item.Name)
+				</td>
+				<td>
+					 @Html.DisplayFor(model => item.Price)
+				</td>
+				<td>
+					 @Html.DisplayFor(model => item.Calories)
+				</td>
+				<td>
+					 @Html.DisplayFor(model => item.CreatedAt)
+				</td>
+				<td>
+					 @Html.DisplayFor(model => item.Description)
+				</td>
+				<td>
+					 @Html.DisplayFor(model => item.Remainder)
+				</td>
+				<th>
+					 @Html.DisplayFor(model => item.Vegan)
+				</th>
+				<th>
+					@Html.DisplayFor(model => item.WeightInGrams)
+				</th>
+				<th>
+					@Html.DisplayFor(model => item.Category.Name)
+				</th>
+				<td>
+					<a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
+					<a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger"><i class="fa-solid fa-trash"></i> Šalinti</a>
+				</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>

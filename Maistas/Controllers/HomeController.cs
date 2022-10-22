@@ -6,9 +6,9 @@ namespace Maistas.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly MaistasContext context;
+    private readonly FoodDbContext context;
 
-    public HomeController(ILogger<HomeController> logger, MaistasContext context)
+    public HomeController(ILogger<HomeController> logger, FoodDbContext context)
     {
         _logger = logger;
         this.context = context;
@@ -16,7 +16,6 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var x = context.Dishes.Any(x => x.Id == 1);
         return View();
     }
 

@@ -6,7 +6,7 @@ var connectionString = builder.Configuration.GetValue<string>("SqlConnectionStri
 
 builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<MaistasContext>(
+builder.Services.AddDbContext<FoodDbContext>(
           options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
 
 var app = builder.Build();
