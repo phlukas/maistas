@@ -1,4 +1,5 @@
-﻿using Maistas.Models.Dishes_subsystem;
+﻿using Maistas.Models;
+using Maistas.Models.Dishes_subsystem;
 using Microsoft.EntityFrameworkCore;
 
 public class FoodDbContext : DbContext
@@ -14,6 +15,8 @@ public class FoodDbContext : DbContext
     public virtual DbSet<DishIngredient> DishIngredients { get; set; } = null!;
 
     public virtual DbSet<Ingredient> Ingredients { get; set; } = null!;
+
+    public virtual DbSet<User> Users { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
