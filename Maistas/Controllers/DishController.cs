@@ -107,6 +107,7 @@ public class DishController : Controller
 			ViewData["deletionNotPermitted"] = true;
 
             var dish = await context.Dishes.SingleAsync(x => x.Id == id);
+            // ReSharper disable once Mvc.ViewNotResolved
             return View(dish);
         }
 	}
