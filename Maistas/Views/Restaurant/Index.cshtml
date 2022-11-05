@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Maistas.Models.Restaurant>
+@{
+    ViewData["title"] = "Restoranų posistemė";
+    Layout = "_Layout";
+}
+
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+	<span class="title">
+		<h1>@ViewData["title"]</h1>
+	</span>
+</div>
+
+<div class="list-group list-group-horizontal">
+    <a href="@Url.Action("RestaurantList")" class="list-group-item list-group-item-action">Peržiūrėti restoranų sąrašą</a>
+    <a href="@Url.Action("AddRestaurant")" class="list-group-item list-group-item-action">Pridėti restoraną</a>
+    <a href="@Url.Action("RemoveRestaurant")" class="list-group-item list-group-item-action">Šalinti restoraną</a>
+    <a href="@Url.Action("EditRestaurant")" class="list-group-item list-group-item-action">Redaguoti restoraną</a>
+    <a href="@Url.Action("DishesList")" class="list-group-item list-group-item-action">Peržiūrėti patiekalų ataskaitą</a>
+</div>
+

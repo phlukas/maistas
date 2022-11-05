@@ -4,7 +4,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetValue<string>("SqlConnectionString");
 
-builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<FoodDbContext>(
           options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
@@ -28,5 +27,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages();
 app.Run();
