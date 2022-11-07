@@ -1,20 +1,69 @@
-﻿@model IEnumerable<Maistas.Models.Restaurant>
+﻿@model IEnumerable<Restaurant>
 @{
-    ViewData["title"] = "Restoranų posistemė";
+    ViewData["title"] = "Restoranų sąrašas";
     Layout = "_Layout";
 }
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
-	<span class="title">
-		<h1>@ViewData["title"]</h1>
-	</span>
+    <span class="title">
+        <h1>@ViewData["title"]</h1>
+    </span>
+    <span>
+        <a href="@Url.Action("AddRestaurant")" class="btn btn-primary">Sukurti naują</a>
+    </span>
 </div>
 
-<div class="list-group list-group-horizontal">
-    <a href="@Url.Action("RestaurantList")" class="list-group-item list-group-item-action">Peržiūrėti restoranų sąrašą</a>
-    <a href="@Url.Action("AddRestaurant")" class="list-group-item list-group-item-action">Pridėti restoraną</a>
-    <a href="@Url.Action("RemoveRestaurant")" class="list-group-item list-group-item-action">Šalinti restoraną</a>
-    <a href="@Url.Action("EditRestaurant")" class="list-group-item list-group-item-action">Redaguoti restoraną</a>
-    <a href="@Url.Action("DishesList")" class="list-group-item list-group-item-action">Peržiūrėti patiekalų ataskaitą</a>
+<div class="d-flex justify-content-center">
+    <table class="entitylist table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model=> model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=> model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=> model.Website)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=> model.WorkTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=> model.MinimumOrderPrice)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Website)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.WorkTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MinimumOrderPrice)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("DishesList")" class="btn btn-primary">Peržiūrėti patiekalų ataskaitą</a>
+                        <a href="@Url.Action("EditRestaurant")" class="btn btn-secondary">Redaguoti</a>
+                        <a href="@Url.Action("RemoveRestaurant")" class="btn btn-danger">Šalinti</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+
+
 

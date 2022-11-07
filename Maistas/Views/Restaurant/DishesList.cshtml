@@ -1,8 +1,17 @@
-﻿@page
-
+﻿@model IEnumerable<Dish>
 @{
-    ViewBag.Title = "title";
+    ViewData["title"] = "Patiekalų sąrašas";
     Layout = "_Layout";
 }
+<div class="list-group list-group-horizontal">
+    <a href="@Url.Action("Index")" class="list-group-item list-group-item-action">Peržiūrėti restoranų sąrašą</a>
+    <a href="@Url.Action("DishesList")" class="list-group-item list-group-item-action active">Peržiūrėti patiekalų ataskaitą</a>
+</div>
 
-<h1>Dishes list</h1>
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewData["title"]</h1>
+    </span>
+</div>
+
+

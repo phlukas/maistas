@@ -1,8 +1,61 @@
-﻿@page
-
+﻿@model Restaurant
 @{
-    ViewBag.Title = "title";
+    ViewData["title"] = "Restorano kūrimas";
     Layout = "_Layout";
 }
 
-<h1>Add restaurant</h1>
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span class="title">
+        <h1>@ViewData["title"]</h1>
+    </span>
+    <span class="actions">
+        <a href="@Url.Action("Index")" class="link-primary"><i class="fa-solid fa-angles-left"></i> Atgal į sarašą</a>
+    </span>
+</div>
+
+
+<div class="container-fluid d-flex justify-content-center">
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    
+    <fieldset class="border rounded shadow p-2">
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title, new { @class = "control-label" })
+            @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Website, new { @class = "control-label" })
+            @Html.EditorFor(m => m.Website, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Website, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+            @Html.EditorFor(m => m.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.WorkTime, new { @class = "control-label" })
+            @Html.EditorFor(m => m.WorkTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.WorkTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.MinimumOrderPrice, new { @class = "control-label" })
+            @Html.EditorFor(m => m.MinimumOrderPrice, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.MinimumOrderPrice, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Address, new { @class = "control-label" })
+            @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+        </div>
+    </fieldset>
+
+    <div class="container-fluid d-flex d-row justify-content-end">
+        <button name="save" value="1" class="btn btn-success"><i class="fa-solid fa-floppy-disk"></i> Išsaugoti</button>
+    </div>
+}
+</div>

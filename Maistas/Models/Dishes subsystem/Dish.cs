@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
+using Maistas.Models;
 
 public class Dish : IEntityTypeConfiguration<Dish>
 {
@@ -27,6 +28,8 @@ public class Dish : IEntityTypeConfiguration<Dish>
     public int CategoryId { get; set; }
 
     public Category Category { get; set; }
+    
+    public Restaurant Restaurant { get; set; }
 
     public List<DishIngredient> DishIngredients { get; set; }
 

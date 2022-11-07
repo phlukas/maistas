@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Maistas.Models;
-
-public class User : IEntityTypeConfiguration<User>
+public class User
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -15,9 +13,5 @@ public class User : IEntityTypeConfiguration<User>
     public string HelpQuestion { get; set; }
     public string CardInfo { get; set; }
     public string Address { get; set; }
-
-    public void Configure(EntityTypeBuilder<User> builder)
-    {
-        
-    }
+    
 }

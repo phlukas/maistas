@@ -54,6 +54,9 @@ namespace Maistas.Migrations
                     b.Property<int>("Remainder")
                         .HasColumnType("int");
 
+                    b.Property<int>("RestaurantId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("Vegan")
                         .HasColumnType("bit");
 
@@ -64,7 +67,9 @@ namespace Maistas.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Dishes", (string)null);
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Dishes");
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.Category", b =>
@@ -82,7 +87,7 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.DishIngredient", b =>
@@ -105,7 +110,7 @@ namespace Maistas.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("DishIngredients", (string)null);
+                    b.ToTable("DishIngredients");
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.Ingredient", b =>
@@ -123,10 +128,10 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredients", (string)null);
+                    b.ToTable("Ingredients");
                 });
 
-            modelBuilder.Entity("Maistas.Models.User", b =>
+            modelBuilder.Entity("Restaurant", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,43 +141,74 @@ namespace Maistas.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("CardInfo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("HelpQuestion")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<double>("MinimumOrderPrice")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
 
                     b.Property<string>("Role")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.Property<string>("Website")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("WorkTime")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Restaurants");
                 });
 
             modelBuilder.Entity("Dish", b =>
@@ -183,7 +219,15 @@ namespace Maistas.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Restaurant", "Restaurant")
+                        .WithMany("Dishes")
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.DishIngredient", b =>
@@ -218,6 +262,11 @@ namespace Maistas.Migrations
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.Ingredient", b =>
                 {
                     b.Navigation("DishIngredients");
+                });
+
+            modelBuilder.Entity("Restaurant", b =>
+                {
+                    b.Navigation("Dishes");
                 });
 #pragma warning restore 612, 618
         }
