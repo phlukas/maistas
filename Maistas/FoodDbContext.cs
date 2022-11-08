@@ -22,4 +22,6 @@ public class FoodDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(FoodDbContext).Assembly);
     }
+
+    public DbSet<User> User { get; set; }
 }
