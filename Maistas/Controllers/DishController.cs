@@ -14,7 +14,7 @@ public class DishController : Controller
 
     public async Task<ActionResult> Index()
 	{
-		var dishes = await context.Dishes.Include(x => x.Category).ToListAsync();
+		var dishes = await context.Dishes.Include(x => x.Category).Include(x => x.Restaurant).ToListAsync();
 
         return View(dishes);
 	}
@@ -22,7 +22,7 @@ public class DishController : Controller
 	public async Task<ActionResult> Create()
 	{
 		var dish = new Dish();
-		await dish.LoadAvailableCategories(context);
+		await dish.LoadAvailableDropdowns(context);
 
 		return View(dish);
 	}
@@ -32,8 +32,11 @@ public class DishController : Controller
 	{
 		ModelState["DishIngredients"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["AvailableCategories"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["AvailableRestaurants"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["Category"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["Category"].Errors.Clear();
+        ModelState["Restaurant"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["Restaurant"].Errors.Clear();
 
         if (ModelState.IsValid)
 		{
@@ -43,13 +46,14 @@ public class DishController : Controller
 			return RedirectToAction("Index");
 		}
 
-		return View(dish);
+        await dish.LoadAvailableDropdowns(context);
+        return View(dish);
 	}
 
 	public async Task<ActionResult> Edit(int id)
 	{
 		var dish = await context.Dishes.SingleAsync(x => x.Id == id);
-        await dish.LoadAvailableCategories(context);
+        await dish.LoadAvailableDropdowns(context);
         return View(dish);
 	}
 
@@ -79,7 +83,7 @@ public class DishController : Controller
 			return RedirectToAction("Index");
 		}
 
-		await newDish.LoadAvailableCategories(context);
+		await newDish.LoadAvailableDropdowns(context);
 
         return View(newDish);
 	}

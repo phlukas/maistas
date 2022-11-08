@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class Restaurant : User, IEntityTypeConfiguration<Restaurant>
 {
-   public string Title { get; set; }
+    public string Title { get; set; }
     public string PhoneNumber { get; set; }
     public string Website { get; set; }
     public string WorkTime { get; set; }

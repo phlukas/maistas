@@ -27,6 +27,8 @@ public class Dish : IEntityTypeConfiguration<Dish>
 
     public int CategoryId { get; set; }
 
+    public int RestaurantId { get; set; }
+
     public Category Category { get; set; }
     
     public Restaurant Restaurant { get; set; }
@@ -36,6 +38,9 @@ public class Dish : IEntityTypeConfiguration<Dish>
     [NotMapped]
     public IList<SelectListItem> AvailableCategories { get; set; }
 
+    [NotMapped]
+    public IList<SelectListItem> AvailableRestaurants { get; set; }
+
     public void Configure(EntityTypeBuilder<Dish> builder)
     {
         builder.Property(x => x.Name).HasMaxLength(255);
@@ -44,7 +49,7 @@ public class Dish : IEntityTypeConfiguration<Dish>
         builder.HasMany(x => x.DishIngredients).WithOne(x => x.Dish);
     }
 
-    public async Task LoadAvailableCategories(FoodDbContext context)
+    public async Task LoadAvailableDropdowns(FoodDbContext context)
     {
         var categories = await context.Categories.ToListAsync();
 
@@ -54,6 +59,17 @@ public class Dish : IEntityTypeConfiguration<Dish>
             {
                 Value = Convert.ToString(x.Id),
                 Text = x.Name,
+            };
+        }).ToList();
+
+        var restaurants = await context.Restaurants.ToListAsync();
+
+        AvailableRestaurants = restaurants.Select(x =>
+        {
+            return new SelectListItem()
+            {
+                Value = Convert.ToString(x.Id),
+                Text = x.Title,
             };
         }).ToList();
     }

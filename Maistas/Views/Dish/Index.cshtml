@@ -41,6 +41,9 @@
 				<th>
 					@Html.DisplayNameFor(model => model.Category)
 				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.Restaurant)
+				</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -73,6 +76,9 @@
 				</th>
 				<th>
 					@Html.DisplayFor(model => item.Category.Name)
+				</th>
+				<th>
+					@Html.DisplayFor(model => item.Restaurant.Title)
 				</th>
 				<td>
 					<a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-primary"><i class="fa-solid fa-pen-to-square"></i> Redaguoti</a>
