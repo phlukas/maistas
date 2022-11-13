@@ -63,7 +63,7 @@ public class Dish : IEntityTypeConfiguration<Dish>
         }).ToList();
 
         var restaurants = await context.Restaurants.ToListAsync();
-
+        
         AvailableRestaurants = restaurants.Select(x =>
         {
             return new SelectListItem()

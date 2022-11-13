@@ -188,14 +188,14 @@ namespace Maistas.Controllers
             {
                 return NotFound();
             }
-
+            
             var user = await _context.User
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
                 return NotFound();
             }
-
+            
             return View(user);
         }
 

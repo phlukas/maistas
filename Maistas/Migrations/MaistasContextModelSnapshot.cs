@@ -131,6 +131,38 @@ namespace Maistas.Migrations
                     b.ToTable("Ingredients");
                 });
 
+            modelBuilder.Entity("Restaurant", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<double>("MinimumOrderPrice")
+                        .HasColumnType("float");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Website")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("WorkTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Restaurants");
+                });
+
             modelBuilder.Entity("User", b =>
                 {
                     b.Property<int>("Id")
@@ -148,10 +180,6 @@ namespace Maistas.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -191,37 +219,6 @@ namespace Maistas.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("User");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-                });
-
-            modelBuilder.Entity("Restaurant", b =>
-                {
-                    b.HasBaseType("User");
-
-                    b.Property<double>("MinimumOrderPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nvarchar(12)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("Website")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<string>("WorkTime")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasDiscriminator().HasValue("Restaurant");
                 });
 
             modelBuilder.Entity("Dish", b =>
@@ -262,6 +259,17 @@ namespace Maistas.Migrations
                     b.Navigation("Ingredient");
                 });
 
+            modelBuilder.Entity("Restaurant", b =>
+                {
+                    b.HasOne("User", "User")
+                        .WithOne("Restaurant")
+                        .HasForeignKey("Restaurant", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Dish", b =>
                 {
                     b.Navigation("DishIngredients");
@@ -280,6 +288,11 @@ namespace Maistas.Migrations
             modelBuilder.Entity("Restaurant", b =>
                 {
                     b.Navigation("Dishes");
+                });
+
+            modelBuilder.Entity("User", b =>
+                {
+                    b.Navigation("Restaurant");
                 });
 #pragma warning restore 612, 618
         }

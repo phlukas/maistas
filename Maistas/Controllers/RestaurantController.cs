@@ -37,14 +37,8 @@ public class RestaurantController : Controller
     public async Task<ActionResult> AddRestaurant(Restaurant restaurant)
     {
         Console.WriteLine("AddRestaurant");
-        // restaurant.Name = "";
-        // restaurant.Surname = "";
-        // restaurant.Email = "";
-        // restaurant.Password = "";
-        // restaurant.Role = "";
-        // restaurant.HelpQuestion = "";
-        // restaurant.CardInfo = "";
         Console.WriteLine(ModelState.ErrorCount);
+        restaurant.User = new User();
         if (ModelState.IsValid)
         {
             Console.WriteLine("Model state is valid");

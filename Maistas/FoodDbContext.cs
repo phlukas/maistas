@@ -17,11 +17,13 @@ public class FoodDbContext : DbContext
     public virtual DbSet<Ingredient> Ingredients { get; set; } = null!;
 
     public virtual DbSet<Restaurant> Restaurants { get; set; } = null!;
+    
+    public virtual DbSet<User> User { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(FoodDbContext).Assembly);
     }
 
-    public DbSet<User> User { get; set; }
+    
 }
