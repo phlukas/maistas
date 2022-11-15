@@ -11,6 +11,7 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
     public double MinimumOrderPrice { get; set; }
     public User User { get; set; }
     public List<Dish> Dishes { get; set; }
+    public int UserId { get; set; }
 
     public Restaurant()
     {

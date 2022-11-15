@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-public class OrderedDish : IEntityTypeConfiguration<OrderedDish>
+public class OrderedDish
 {
     public int Id { get; set; }
     public int Quantity { get; set; }

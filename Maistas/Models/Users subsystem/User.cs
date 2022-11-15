@@ -13,7 +13,6 @@ public class User : IEntityTypeConfiguration<User>
     public string HelpQuestion { get; set; }
     public string CardInfo { get; set; }
     public string Address { get; set; }
-
     public Restaurant? Restaurant { get; set; }
 
     public User()
@@ -46,6 +45,6 @@ public class User : IEntityTypeConfiguration<User>
         builder.Property(x => x.HelpQuestion).HasMaxLength(500);
         builder.Property(x => x.CardInfo).HasMaxLength(100);
         builder.Property(x => x.Address).HasMaxLength(255);
-        builder.HasOne(x => x.Restaurant).WithOne(x => x.User).HasForeignKey<Restaurant>(x=>x.Id);
+        builder.HasOne(x => x.Restaurant).WithOne(x => x.User).HasForeignKey<Restaurant>(x=>x.UserId);
     }
 }

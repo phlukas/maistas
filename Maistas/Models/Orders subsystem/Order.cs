@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Order : IEntityTypeConfiguration<Order>
+public class Order
 {
     public int Id { get; set; }
     public DateTime Date { get; set; }

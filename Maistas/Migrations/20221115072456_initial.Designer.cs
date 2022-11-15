@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Maistas.Migrations
 {
     [DbContext(typeof(FoodDbContext))]
-    [Migration("20221113113535_addUsersAndRestaurants")]
-    partial class addUsersAndRestaurants
+    [Migration("20221115072456_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,7 +136,10 @@ namespace Maistas.Migrations
             modelBuilder.Entity("Restaurant", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<double>("MinimumOrderPrice")
                         .HasColumnType("float");
@@ -151,6 +154,9 @@ namespace Maistas.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Website")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -161,6 +167,9 @@ namespace Maistas.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Restaurants");
                 });
@@ -265,7 +274,7 @@ namespace Maistas.Migrations
                 {
                     b.HasOne("User", "User")
                         .WithOne("Restaurant")
-                        .HasForeignKey("Restaurant", "Id")
+                        .HasForeignKey("Restaurant", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

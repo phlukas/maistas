@@ -31,4 +31,8 @@
     <AdditionalFiles Include="Views\Restaurant\RestaurantList.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
