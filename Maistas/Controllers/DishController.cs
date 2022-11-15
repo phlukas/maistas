@@ -62,8 +62,11 @@ public class DishController : Controller
 	{
         ModelState["DishIngredients"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["AvailableCategories"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["AvailableRestaurants"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["Category"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-		ModelState["Category"].Errors.Clear();
+        ModelState["Category"].Errors.Clear();
+        ModelState["Restaurant"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["Restaurant"].Errors.Clear();
 
         if (ModelState.IsValid)
 		{
