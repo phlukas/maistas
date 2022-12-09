@@ -3,9 +3,9 @@
     ViewData["title"] = "Patiekalų sąrašas";
     Layout = "_Layout";
 }
-<div class="list-group list-group-horizontal">
-    <a href="@Url.Action("Index")" class="list-group-item list-group-item-action">Peržiūrėti restoranų sąrašą</a>
-    <a href="@Url.Action("DishesList")" class="list-group-item list-group-item-action active">Peržiūrėti patiekalų ataskaitą</a>
+<div>
+    <a href="@Url.Action("Index")" class="btn btn-secondary">Peržiūrėti restoranų sąrašą</a>
+    <a href="@Url.Action("FilteredDishList")" class="btn btn-primary">Peržiūrėti rušiuotą sąrašą</a>
 </div>
 
 <div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
@@ -13,5 +13,7 @@
         <h1>@ViewData["title"]</h1>
     </span>
 </div>
+
+
 
 

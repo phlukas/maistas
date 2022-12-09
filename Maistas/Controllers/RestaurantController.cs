@@ -29,6 +29,7 @@ public class RestaurantController : Controller
     public async Task<ActionResult> AddRestaurant()
     {
         var restaurant = new Restaurant();
+        // await restaurant.LoadAvailableDropdowns(context);
         
         return View(restaurant);
     }
@@ -36,18 +37,19 @@ public class RestaurantController : Controller
     [HttpPost]
     public async Task<ActionResult> AddRestaurant(Restaurant restaurant)
     {
-        Console.WriteLine("AddRestaurant");
-        Console.WriteLine(ModelState.ErrorCount);
-        restaurant.User = new User();
+        ModelState["User"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["User"].Errors.Clear();
+        
         if (ModelState.IsValid)
         {
-            Console.WriteLine("Model state is valid");
+
             await context.Restaurants.AddAsync(restaurant);
             await context.SaveChangesAsync();
         
             return RedirectToAction("Index");
         }
 
+        // await restaurant.LoadAvailableDropdowns(context);
         return View(restaurant);
     }
     
@@ -57,6 +59,11 @@ public class RestaurantController : Controller
     }
 
     public IActionResult EditRestaurant()
+    {
+        return View();
+    }
+
+    public IActionResult FilteredDishList()
     {
         return View();
     }
