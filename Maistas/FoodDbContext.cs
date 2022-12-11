@@ -17,9 +17,12 @@ public class FoodDbContext : DbContext
     public virtual DbSet<Ingredient> Ingredients { get; set; } = null!;
 
     public virtual DbSet<Restaurant> Restaurants { get; set; } = null!;
-	//public virtual DbSet<Order> Orders { get; set; } = null!;
 
-	public virtual DbSet<User> User { get; set; } = null!;
+	public virtual DbSet<Order> Orders { get; set; } = null!;
+
+    public virtual DbSet<OrderedDish> OrderedDishes { get; set; } = null!;
+
+    public virtual DbSet<User> User { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

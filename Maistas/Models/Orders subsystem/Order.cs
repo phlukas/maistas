@@ -3,17 +3,26 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Order
+public class Order : IEntityTypeConfiguration<Order>
 {
     public int Id { get; set; }
+
     public DateTime Date { get; set; }
+
     public string Duration { get; set; }
+
     public string Status { get; set; }
+
     public DateTime OrderTime { get; set; }
+
     public DateTime DeliveryTime { get; set; }
+
     public double TotalCost { get; set; }
+
     public double Distance { get; set; }
+
 	public int RestaurantId { get; set; }
+
 	public Restaurant Restaurant { get; set; }
 
     public List<OrderedDish> OrderedDish { get; set; }
@@ -24,11 +33,6 @@ public class Order
     [NotMapped]
     public IList<SelectListItem> AvailableRestaurants { get; set; }
 
-    public Order()
-    {
-
-		this.OrderedDish = new List<OrderedDish>();
-    }
     public void Configure(EntityTypeBuilder<Order> builder)
     {
         builder.Property(x => x.Date).HasMaxLength(255);

@@ -118,4 +118,12 @@ public class DishController : Controller
             return View(dish);
         }
 	}
+
+    public async Task<ActionResult> Recommended()
+    {
+        var dishes = await context.Dishes.Include(x => x.Category).Include(x => x.Restaurant)
+			.ToListAsync();
+
+        return View(dishes);
+    }
 }

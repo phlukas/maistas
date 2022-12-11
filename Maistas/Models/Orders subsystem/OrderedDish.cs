@@ -4,12 +4,16 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-public class OrderedDish
+public class OrderedDish : IEntityTypeConfiguration<OrderedDish>
 {
     public int Id { get; set; }
+
     public int Quantity { get; set; }
-	public int DishId { get; set; }
+
+	public int? DishId { get; set; }
+
 	public Dish Dish { get; set; }
+
     public Order Order { get; set; }
 
 	[NotMapped]
