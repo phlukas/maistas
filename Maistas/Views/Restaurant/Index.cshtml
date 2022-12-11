@@ -55,9 +55,9 @@
                         @Html.DisplayFor(modelItem => item.MinimumOrderPrice)
                     </td>
                     <td>
-                        <a href="@Url.Action("DishesList")" class="btn btn-primary">Peržiūrėti patiekalų ataskaitą</a>
-                        <a href="@Url.Action("EditRestaurant")" class="btn btn-secondary">Redaguoti</a>
-                        <a href="@Url.Action("RemoveRestaurant")" class="btn btn-danger">Šalinti</a>
+                        <a href="@Url.Action("DishesList", item)" class="btn btn-primary">Peržiūrėti patiekalų ataskaitą</a>
+                        <a href="@Url.Action("EditRestaurant", item)" class="btn btn-secondary">Redaguoti</a>
+                        <a href="@Url.Action("RemoveRestaurant", item)" class="btn btn-danger">Šalinti</a>
                     </td>
                 </tr>
             }

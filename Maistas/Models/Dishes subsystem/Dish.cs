@@ -1,28 +1,35 @@
-﻿using Maistas.Models.Dishes_subsystem;
+﻿using System.ComponentModel;
+using Maistas.Models.Dishes_subsystem;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations.Schema;
-using Maistas.Models;
 
 public class Dish : IEntityTypeConfiguration<Dish>
 {
     public int Id { get; set; }
-
+    [DisplayName("Pavadinimas")]
     public string Name { get; set; }
 
+    [DisplayName("Kaina")]
     public double Price { get; set; }
-
+    
+    [DisplayName("Likutis")]
     public int Remainder { get; set; }
 
+    [DisplayName("Sukurta")]
     public DateTime CreatedAt { get; set; }
 
+    [DisplayName("Kalorijos")]
     public int Calories { get; set; }
 
+    [DisplayName("Aprašymas")]
     public string Description { get; set; }
 
+    [DisplayName("Svoris")]
     public double WeightInGrams { get; set; }
 
+    [DisplayName("Vegetariškas")]
     public bool Vegan { get; set; }
 
     public int CategoryId { get; set; }

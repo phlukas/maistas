@@ -1,8 +1,59 @@
-﻿@model Dish
+﻿@model DishListView
 
 @{
     ViewBag.Title = "title";
     Layout = "_Layout";
 }
 
-<h1>Rušiuotas patiekalų sąrašas</h1>
+<div class="main-content-header container-fluid d-flex d-row justify-content-between align-items-center p-2">
+    <span>
+        <a href="@Url.Action("DishesList", Model.Restaurant)" class="btn btn-secondary">Grįžti į patiekalų sąrašą</a>
+    </span>
+</div>
+
+<h1>Filtruotas patiekalų sąrašas</h1>
+
+<table class="entitylist table table-striped table-hover">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model=> model.Dishes[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model.Dishes[0].WeightInGrams)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model.Dishes[0].Calories)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model.Dishes[0].Vegan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model=> model.Dishes[0].Price)
+        </th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Dishes)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WeightInGrams)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Calories)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vegan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
