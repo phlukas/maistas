@@ -23,7 +23,9 @@ public class Order : IEntityTypeConfiguration<Order>
 
 	public int RestaurantId { get; set; }
 
-	public Restaurant Restaurant { get; set; }
+    public int UserId { get; set; }
+
+    public Restaurant Restaurant { get; set; }
 
     public List<OrderedDish> OrderedDish { get; set; }
 

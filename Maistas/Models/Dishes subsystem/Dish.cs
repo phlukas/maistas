@@ -36,8 +36,10 @@ public class Dish : IEntityTypeConfiguration<Dish>
 
     public int RestaurantId { get; set; }
 
+    [DisplayName("Kategorija")]
     public Category Category { get; set; }
-    
+
+    [DisplayName("Restoranas")]
     public Restaurant Restaurant { get; set; }
 
     public List<DishIngredient> DishIngredients { get; set; }
