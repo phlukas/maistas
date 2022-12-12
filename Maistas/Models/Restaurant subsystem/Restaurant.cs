@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -11,8 +12,9 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
     public string Website { get; set; }
     public string WorkTime { get; set; }
     public double MinimumOrderPrice { get; set; }
-    public User? User { get; set; }
+    public User User { get; set; }
     public List<Dish> Dishes { get; set; }
+    [Required]
     public int UserId { get; set; }
     
     [NotMapped]

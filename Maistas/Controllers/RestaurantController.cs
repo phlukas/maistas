@@ -92,6 +92,11 @@ public class RestaurantController : Controller
     [HttpPost]
     public async Task<ActionResult> AddRestaurant(Restaurant restaurant)
     {
+        if (restaurant.UserId == 0)
+        {
+            await restaurant.LoadAvailableDropdowns(context);
+            return View(restaurant);
+        }
         var user = await context.User.Select(u=> u).Where(u => u.Id == restaurant.UserId).FirstOrDefaultAsync();
         user.Role = "Restaurant";
         restaurant.User = user;

@@ -69,7 +69,7 @@ namespace Maistas.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Dishes");
+                    b.ToTable("Dishes", (string)null);
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.Category", b =>
@@ -87,7 +87,7 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.DishIngredient", b =>
@@ -110,7 +110,7 @@ namespace Maistas.Migrations
 
                     b.HasIndex("IngredientId");
 
-                    b.ToTable("DishIngredients");
+                    b.ToTable("DishIngredients", (string)null);
                 });
 
             modelBuilder.Entity("Maistas.Models.Dishes_subsystem.Ingredient", b =>
@@ -128,7 +128,7 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ingredients");
+                    b.ToTable("Ingredients", (string)null);
                 });
 
             modelBuilder.Entity("Order", b =>
@@ -175,7 +175,7 @@ namespace Maistas.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("OrderedDish", b =>
@@ -201,7 +201,7 @@ namespace Maistas.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderedDishes");
+                    b.ToTable("OrderedDishes", (string)null);
                 });
 
             modelBuilder.Entity("Restaurant", b =>
@@ -242,7 +242,7 @@ namespace Maistas.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Restaurants");
+                    b.ToTable("Restaurants", (string)null);
                 });
 
             modelBuilder.Entity("User", b =>
@@ -300,7 +300,7 @@ namespace Maistas.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("Dish", b =>
