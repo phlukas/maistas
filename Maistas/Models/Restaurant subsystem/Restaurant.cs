@@ -28,7 +28,7 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
     public async Task LoadAvailableDropdowns(FoodDbContext context)
     {
         var users = await context.User
-            .Where(x => x.Role != "Restaurant")
+            .Where(x => x.Role == "User")
             .ToListAsync();
 
         AvailableUsers = users.Select(x =>

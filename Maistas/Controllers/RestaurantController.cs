@@ -29,6 +29,7 @@ public class RestaurantController : Controller
             .ToListAsync();
         
         DishListView dishListView = new DishListView();
+        await dishListView.LoadAvailableDropdowns(context);
         dishListView.Dishes = dishes;
         dishListView.Restaurant = restaurant;
         
@@ -40,40 +41,62 @@ public class RestaurantController : Controller
     {
         var filteredDishes = await context.Dishes
             .ToListAsync();
+        await dishListView.LoadAvailableDropdowns(context);
+
+        if (dishListView.CategoryId != null && dishListView.CategoryId != 0)
+        {
+            filteredDishes = filteredDishes
+                .Where(d => d.CategoryId == dishListView.CategoryId)
+                .ToList();
+        }
 
         if (dishListView.PriceFrom != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.Price >= dishListView.PriceFrom).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.Price >= dishListView.PriceFrom)
+                .ToList();
         }
         
         if (dishListView.PriceTo != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.Price <= dishListView.PriceTo).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.Price <= dishListView.PriceTo)
+                .ToList();
         }
         
         if (dishListView.CaloriesFrom != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.Calories >= dishListView.CaloriesFrom).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.Calories >= dishListView.CaloriesFrom)
+                .ToList();
         }
         
         if (dishListView.CaloriesTo != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.Calories <= dishListView.CaloriesTo).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.Calories <= dishListView.CaloriesTo)
+                .ToList();
         }
         
         if (dishListView.WeightFrom != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.WeightInGrams >= dishListView.WeightFrom).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.WeightInGrams >= dishListView.WeightFrom)
+                .ToList();
         }
         
         if (dishListView.WeightTo != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.WeightInGrams <= dishListView.WeightTo).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.WeightInGrams <= dishListView.WeightTo)
+                .ToList();
         }
         
         if (dishListView.IsVegetarian != null)
         {
-            filteredDishes = filteredDishes.Where(d => d.Vegan == dishListView.IsVegetarian).ToList();
+            filteredDishes = filteredDishes
+                .Where(d => d.Vegan == dishListView.IsVegetarian)
+                .ToList();
         }
         
         dishListView.Dishes = filteredDishes;
