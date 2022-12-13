@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System.Data;
 
 namespace Maistas.Controllers
@@ -29,15 +30,26 @@ namespace Maistas.Controllers
         //GET Users1/UserList
         public async Task<IActionResult> UserList()
         {
-
             var users = await _context.MaistasUser.ToListAsync();
+
+
+
+            var query =
+                from user in _context.MaistasUser
+                join userRole in _context.UserRoles on user.Id equals userRole.UserId
+                where (userRole.RoleId == 2)
+                select user;
+               
+            var result = await query.ToListAsync();
+
+           
 /*
             
            var AvailableUsers = _context.MaistasUser.Select(x =>
             _userManager.IsInRoleAsync(x, "user").Result
      ).ToListAsync();*/
 
-            return View(users);
+            return View(result);
             
         }
         //GET Users1/CourierList
