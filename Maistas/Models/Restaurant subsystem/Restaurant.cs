@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using SendGrid.Helpers.Mail;
 
 public class Restaurant : IEntityTypeConfiguration<Restaurant>
 {
@@ -34,7 +35,7 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
 
         //var users = await context.MaistasUser.Where(x => userManager.IsInRoleAsync(x,"user").Result == true)
         //.ToListAsync();
-        var users = await context.MaistasUser.ToListAsync();
+        /*var users = await context.MaistasUser.ToListAsync();
 
         //RoleManager<IdentityRole> roleManager;
         AvailableUsers = users.Select(x =>
@@ -47,9 +48,21 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
                     Text = x.UserName
                 };
         })
-            .ToList();
+            .ToList();*/
+        var users = await context.MaistasUser.ToListAsync();
+        var query =
+            from user in context.MaistasUser
+            join userRole in context.UserRoles on user.Id equals userRole.UserId
+            where (userRole.RoleId == 2)
+            select new SelectListItem
+            {
+                Value = Convert.ToString(user.Id),
+                Text = user.UserName
+            };
 
-    }
+        AvailableUsers = query.ToList();
+
+}
     public void Configure(EntityTypeBuilder<Restaurant> builder)
     {
         builder.Property(x => x.Title).HasMaxLength(255);

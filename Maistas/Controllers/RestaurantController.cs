@@ -125,6 +125,7 @@ public class RestaurantController : Controller
             return View(restaurant);
         }
         var user = await context.MaistasUser.Select(u=>u).Where(u => u.Id == restaurant.UserId).FirstOrDefaultAsync();
+        _userManager.RemoveFromRoleAsync(user, "user").Wait();
         _userManager.AddToRoleAsync(user, "restaurant").Wait();
         restaurant.User = user;
         
