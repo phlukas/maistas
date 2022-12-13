@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,7 +13,7 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
     public string Website { get; set; }
     public string WorkTime { get; set; }
     public double MinimumOrderPrice { get; set; }
-    public User User { get; set; }
+    public MaistasUser User { get; set; }
     public List<Dish> Dishes { get; set; }
     [Required]
     public int UserId { get; set; }
@@ -25,19 +26,26 @@ public class Restaurant : IEntityTypeConfiguration<Restaurant>
         this.Dishes = new List<Dish>();
     }
     
-    public async Task LoadAvailableDropdowns(FoodDbContext context)
+    public async Task LoadAvailableDropdowns(FoodDbContext context, UserManager<MaistasUser> userManager)
     {
-        var users = await context.User
-            .Where(x => x.Role == "User")
-            .ToListAsync();
+        //  var users = await context.MaistasUser
+        //    .Where(x => x.Role != "Restaurant")
+        //  .ToListAsync();
 
+        //var users = await context.MaistasUser.Where(x => userManager.IsInRoleAsync(x,"user").Result == true)
+        //.ToListAsync();
+        var users = await context.MaistasUser.ToListAsync();
+
+        //RoleManager<IdentityRole> roleManager;
         AvailableUsers = users.Select(x =>
         {
-            return new SelectListItem()
-            {
-                Value = Convert.ToString(x.Id),
-                Text = x.Username,
-            };
+           
+                return new SelectListItem()
+                {
+
+                    Value = Convert.ToString(x.Id),
+                    Text = x.UserName
+                };
         })
             .ToList();
 

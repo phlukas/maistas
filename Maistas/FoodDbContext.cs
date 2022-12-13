@@ -1,8 +1,10 @@
-﻿using Maistas.Models;
-using Maistas.Models.Dishes_subsystem;
+﻿using Maistas.Models.Dishes_subsystem;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Maistas.Models.Users_subsystem;
 
-public class FoodDbContext : DbContext
+public class FoodDbContext : IdentityDbContext<MaistasUser,IdentityRole<int>, int>
 {
     public FoodDbContext(DbContextOptions options) : base(options) { }
 
@@ -22,12 +24,15 @@ public class FoodDbContext : DbContext
 
     public virtual DbSet<OrderedDish> OrderedDishes { get; set; } = null!;
 
-    public virtual DbSet<User> User { get; set; } = null!;
+    public virtual DbSet<MaistasUser> MaistasUser { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(FoodDbContext).Assembly);
+        base.OnModelCreating(modelBuilder);
     }
+
+    public DbSet<Maistas.Models.Users_subsystem.ProjectRole> ProjectRole { get; set; }
 
     
 }

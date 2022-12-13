@@ -1,6 +1,8 @@
-﻿using Maistas.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SendGrid.Helpers.Mail;
 
 
 namespace Maistas.Controllers;
@@ -8,10 +10,12 @@ namespace Maistas.Controllers;
 public class RestaurantController : Controller
 {
     private readonly FoodDbContext context;
-    
-    public RestaurantController(FoodDbContext context)
+    private readonly UserManager<MaistasUser> _userManager;
+
+    public RestaurantController(FoodDbContext context, UserManager<MaistasUser> userManager)
     {
         this.context = context;
+        _userManager = userManager;
     }
     
     public async Task<ActionResult> Index()
@@ -107,7 +111,7 @@ public class RestaurantController : Controller
     public async Task<ActionResult> AddRestaurant()
     {
         var restaurant = new Restaurant();
-        await restaurant.LoadAvailableDropdowns(context);
+        await restaurant.LoadAvailableDropdowns(context, _userManager);
         
         return View(restaurant);
     }
@@ -117,32 +121,24 @@ public class RestaurantController : Controller
     {
         if (restaurant.UserId == 0)
         {
-            await restaurant.LoadAvailableDropdowns(context);
+            await restaurant.LoadAvailableDropdowns(context, _userManager);
             return View(restaurant);
         }
-        var user = await context.User.Select(u=> u).Where(u => u.Id == restaurant.UserId).FirstOrDefaultAsync();
-        user.Role = "Restaurant";
+        var user = await context.MaistasUser.Select(u=>u).Where(u => u.Id == restaurant.UserId).FirstOrDefaultAsync();
+        _userManager.AddToRoleAsync(user, "restaurant").Wait();
         restaurant.User = user;
         
         #region User input validation
         ModelState["User.Name"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["User.Name"].Errors.Clear();
-        ModelState["User.Email"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-        ModelState["User.Email"].Errors.Clear();
         ModelState["User.Surname"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["User.Surname"].Errors.Clear();
-        ModelState["User.Role"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-        ModelState["User.Role"].Errors.Clear();
         ModelState["User.CardInfo"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["User.CardInfo"].Errors.Clear();
-        ModelState["User.Password"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-        ModelState["User.Password"].Errors.Clear();
-        ModelState["User.Username"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-        ModelState["User.Username"].Errors.Clear();
-        ModelState["User.HelpQuestion"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
-        ModelState["User.HelpQuestion"].Errors.Clear();
+        ModelState["User.Address"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["User.Address"].Errors.Clear();
         #endregion
-        
+
         ModelState["AvailableUsers"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["AvailableUsers"].Errors.Clear();
         
@@ -155,7 +151,7 @@ public class RestaurantController : Controller
             return RedirectToAction("Index");
         }
 
-        await restaurant.LoadAvailableDropdowns(context);
+        await restaurant.LoadAvailableDropdowns(context, _userManager);
         return View(restaurant);
     }
     
@@ -166,17 +162,26 @@ public class RestaurantController : Controller
 
     public async Task<ActionResult> EditRestaurant(Restaurant restaurant)
     {
-        await restaurant.LoadAvailableDropdowns(context);
+        await restaurant.LoadAvailableDropdowns(context, _userManager);
         return View(restaurant);
     }
     
     [HttpPost]
     public async Task<ActionResult> EditRestaurant(int id, Restaurant newRestaurant)
     {
-
+        ModelState["Title"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["Title"].Errors.Clear();
+        ModelState["Website"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["Website"].Errors.Clear();
+        ModelState["PhoneNumber"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["PhoneNumber"].Errors.Clear();
         ModelState["AvailableUsers"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
         ModelState["AvailableUsers"].Errors.Clear();
-        
+        ModelState["WorkTime"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["WorkTime"].Errors.Clear();
+        ModelState["User"].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Valid;
+        ModelState["User"].Errors.Clear();
+
         if (ModelState.IsValid)
         {
             var restaurant = await context.Restaurants.SingleAsync(x => x.Id == id);
@@ -192,7 +197,7 @@ public class RestaurantController : Controller
             return RedirectToAction("Index");
         }
         
-        await newRestaurant.LoadAvailableDropdowns(context);
+        await newRestaurant.LoadAvailableDropdowns(context, _userManager);
         return View(newRestaurant);
     }
 
@@ -202,9 +207,9 @@ public class RestaurantController : Controller
         try
         {
             var restaurant = await context.Restaurants.SingleAsync(x => x.Id == id);
-            var user = await context.User.SingleAsync(x => x.Id == restaurant.UserId);
-            user.Role = "User";
-            context.User.Update(user);
+            var user = await context.MaistasUser.SingleAsync(x => x.Id == restaurant.UserId);
+            var result = await _userManager.AddToRoleAsync(user, "restaurant");
+            context.MaistasUser.Update(user);
             context.Remove(restaurant);
 
             await context.SaveChangesAsync();
