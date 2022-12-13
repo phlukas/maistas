@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Maistas.Controllers;
 
