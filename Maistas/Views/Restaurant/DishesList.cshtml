@@ -18,14 +18,17 @@
 
 @using (Html.BeginForm())
 {
-    <div>
-        <table>
+    
+    <div class="form-group">
+        <table class="table table-responsive">
             <tr>
                 <td>
-                    <label>Kaina nuo:</label>
-                    @Html.EditorFor(m => m.PriceFrom, new { @class = "form-control" })
-                    <label>Kaina iki:</label>
-                    @Html.EditorFor(m => m.PriceTo, new { @class = "form-control" })
+                    <div>    
+                        <label>Kaina nuo:</label>
+                        @Html.EditorFor(m => m.PriceFrom, new { @class = "form-control" })
+                        <label>Kaina iki:</label>
+                        @Html.EditorFor(m => m.PriceTo, new { @class = "form-control" })
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -44,7 +47,12 @@
                     <label>Svoris iki:</label>
                     @Html.EditorFor(m => m.WeightTo, new { @class = "form-control" })
                 </td>
-                                                
+            </tr>
+            <tr>
+                <td>
+                    <label>Kategorija:</label>
+                    @Html.DropDownListFor(m => m.CategoryId, Model.AvailableCategories, "--------------", new { @class = "form-control" })
+                </td>
             </tr>
             <tr>
                 <td>
@@ -77,6 +85,9 @@
             @Html.DisplayNameFor(model=> model.Dishes[0].Vegan)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Dishes[0].Category)
+        </th>
+        <th>
             @Html.DisplayNameFor(model=> model.Dishes[0].Price)
         </th>
         
@@ -97,6 +108,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Vegan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Price)
