@@ -55,8 +55,19 @@ namespace Maistas.Controllers
         //GET Users1/CourierList
         public async Task<IActionResult> CourierList()
         {
-            //return View(await _context.MaistasUser.Select(u => u).Where(u => u.Role == "Courier").ToListAsync());
-            return View(await _context.MaistasUser.ToListAsync());
+            var users = await _context.MaistasUser.ToListAsync();
+
+
+
+            var query =
+                from user in _context.MaistasUser
+                join userRole in _context.UserRoles on user.Id equals userRole.UserId
+                where (userRole.RoleId == 3)
+                select user;
+
+            var result = await query.ToListAsync();
+
+            return View(result);
         }
 
 
